@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BillTracker</string>
+    <string name="hint_search">O que deseja procurar?</string>
+    <string name="dashboard">dashboard</string>
+    <string name="list">registros</string>
+    <string name="filter_all_registros">Todos registros</string>
+    <string name="filter_depesas">apenas despesas</string>
+    <string name="filter_receitas">Todas receitas</string>
+</resources>

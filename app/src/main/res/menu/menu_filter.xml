@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_all_registros"
+        android:title="@string/filter_all_registros"/>
+
+    <item android:id="@+id/menu_despesas"
+        android:title="@string/filter_depesas"/>
+
+    <item android:id="@+id/menu_receitas"
+        android:title="@string/filter_receitas"/>
+</menu>
