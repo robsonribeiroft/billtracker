@@ -4,10 +4,12 @@ import android.os.Parcelable
 import br.com.rrdev.billtracker.utils.convertTimestampToDate
 import br.com.rrdev.billtracker.utils.formatOnPattern
 import br.com.rrdev.billtracker.utils.formatToReal
+import br.com.rrdev.billtracker.utils.serializeToMap
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Despesa(var valor: Long = 0,
+data class Despesa(var id: String = "",
+                   var valor: Long = 0,
                    var descricao: String = "",
                    var data: Long = 0,
                    var pago: Boolean = false,
@@ -26,4 +28,5 @@ data class Despesa(var valor: Long = 0,
     override fun paymentIsResolved(): Boolean = pago
 
     override fun getDescription(): String = descricao
+
 }

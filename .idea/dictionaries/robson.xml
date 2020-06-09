@@ -3,11 +3,13 @@
     <words>
       <w>descricao</w>
       <w>despesa</w>
+      <w>despesas</w>
       <w>pago</w>
       <w>recebido</w>
       <w>receita</w>
       <w>receitas</w>
       <w>registro</w>
+      <w>registros</w>
     </words>
   </dictionary>
 </component>

@@ -4,7 +4,7 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Date.formatOnPattern(pattern: String="yyyy-MMM-dd HH:mm:ss",
+fun Date.formatOnPattern(pattern: String="yyyy-MMM-dd",
                          locale: Locale = Locale.getDefault(),
                          timeZone: String = "GMT-3"): String{
     val simpleDateFormat = SimpleDateFormat(pattern, locale)

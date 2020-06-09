@@ -4,6 +4,9 @@
     <string name="dashboard">dashboard</string>
     <string name="list">registros</string>
     <string name="filter_all_registros">Todos registros</string>
-    <string name="filter_depesas">apenas despesas</string>
-    <string name="filter_receitas">Todas receitas</string>
+    <string name="filter_depesas">Exibir Despesas</string>
+    <string name="filter_receitas">Exibir Receitas</string>
+    <string name="error_save_despesa_in_db">Nao foi possivel salvar despesa ao Banco</string>
+    <string name="error_get_despesas_from_db">Nao foi possivel recuperar valores do banco</string>
+    <string name="error_file_upload">Nao foi possivel fazer o upload da Imagem</string>
 </resources>

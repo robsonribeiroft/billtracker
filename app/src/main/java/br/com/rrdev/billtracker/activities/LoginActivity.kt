@@ -1,22 +1,24 @@
 package br.com.rrdev.billtracker.activities
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import br.com.rrdev.billtracker.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import br.com.rrdev.billtracker.R
+import br.com.rrdev.billtracker.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
-import java.sql.ClientInfoStatus
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -34,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
+            .requestProfile()
             .build()
         googleSignClient = GoogleSignIn.getClient(this, gso)
 
@@ -86,4 +89,9 @@ class LoginActivity : AppCompatActivity() {
 
             }
     }
+
+
+
+
+
 }

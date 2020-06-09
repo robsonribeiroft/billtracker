@@ -8,4 +8,28 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="NovaDespesaTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorIndicatorBarDespesa</item>
+        <item name="colorPrimaryDark">@color/colorIndicatorBarDespesa</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="textAllCaps">false</item>
+        <item name="textInputStyle">
+            @style/MyCustomTextInputStyle
+        </item>
+        <item name="editTextStyle">
+            @style/MyCustomEditTextStyle
+        </item>
+    </style>
+
+
+    <style name="MyCustomTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="hintTextAppearance">@android:color/white</item>
+    </style>
+
+    <style name="MyCustomEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
 </resources>

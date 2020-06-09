@@ -28,6 +28,8 @@ class RegistroAdapter: RecyclerView.Adapter<RegistroViewHolder>() {
         )
     }
 
+    fun isEmpty() = registroList.isEmpty()
+
     override fun getItemCount() = registroList.size
 
     fun getItem(position: Int) = registroList[position]

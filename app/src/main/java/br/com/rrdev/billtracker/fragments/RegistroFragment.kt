@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.rrdev.billtracker.R
 import br.com.rrdev.billtracker.activities.NewRegistroActivity
@@ -12,7 +15,9 @@ import br.com.rrdev.billtracker.activities.SearchActivity
 import br.com.rrdev.billtracker.models.Despesa
 import br.com.rrdev.billtracker.models.Receita
 import br.com.rrdev.billtracker.models.Registro
+import br.com.rrdev.billtracker.models.states.*
 import br.com.rrdev.billtracker.recyclers.RegistroAdapter
+import br.com.rrdev.billtracker.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.container_registro_header.*
 import kotlinx.android.synthetic.main.container_registro_header.view.*
 import kotlinx.android.synthetic.main.fragment_registro.*
@@ -22,7 +27,14 @@ import kotlinx.android.synthetic.main.fragment_registro.view.*
 class RegistroFragment: Fragment() {
 
     private lateinit var registroAdapter: RegistroAdapter
+    private lateinit var viewModel: MainViewModel
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_registro, container, false)
@@ -31,6 +43,8 @@ class RegistroFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        registerForContextMenu(view.header.button_select_filter)
 
         button_search.setOnClickListener {
             startActivity(Intent(context, SearchActivity::class.java))
@@ -49,29 +63,13 @@ class RegistroFragment: Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        val staticList = listOf<Registro>(
-            Despesa(
-            valor = 1200,
-            data = System.currentTimeMillis(),
-            descricao = "O valor é em centavosO valor é em centavosO valor é em centavosO valor é em centavosO valor é em centavos",
-                pago = true),
-            Despesa(
-                valor = 1200,
-                data = System.currentTimeMillis(),
-                descricao = "O valor é em centavos", pago = false),
-            Receita(
-                valor = 1200,
-                data = System.currentTimeMillis(),
-                descricao = "O valor é em centavos", recebido = true),
-            Receita(
-                valor = 1200,
-                data = System.currentTimeMillis(),
-                descricao = "O valor é em centavos", recebido = false)
-        )
-        registroAdapter.registroList = staticList
+        viewModel.uiState.observe(viewLifecycleOwner, Observer(this::handleUIStateUpdate))
 
+    }
 
-        registerForContextMenu(view.header.button_select_filter)
+    override fun onResume() {
+        super.onResume()
+        viewModel.getRegistrosFromFireStore()
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -99,6 +97,44 @@ class RegistroFragment: Fragment() {
     }
 
     private fun handleOnItemClick(position: Int){
+        val intent = Intent(context, NewRegistroActivity::class.java).apply {
+            putExtra("registro", registroAdapter.getItem(position) as Despesa)
+        }
+        startActivity(intent)
         Log.d("BILLT_RACKER_LOG", "valor registro: ${registroAdapter.getItem(position)}")
+    }
+
+    private fun handleUIStateUpdate(uiState: UIState){
+        when(uiState){
+            is Loading->{
+                recycler.visibility = View.GONE
+                load_content.visibility = View.VISIBLE
+                empty_content.visibility = View.GONE
+            }
+
+            is CompleteWithNoData->{
+                recycler.visibility = View.GONE
+                load_content.visibility = View.GONE
+                empty_content.visibility = View.VISIBLE
+            }
+            is Complete<*>->{
+                registroAdapter.registroList = uiState.data as List<Registro>
+                recycler.visibility = View.VISIBLE
+                load_content.visibility = View.GONE
+                empty_content.visibility = View.GONE
+            }
+            is Error->{
+                if (!registroAdapter.isEmpty()) {
+                    recycler.visibility = View.VISIBLE
+                    load_content.visibility = View.GONE
+                    empty_content.visibility = View.GONE
+                }  else{
+                    recycler.visibility = View.GONE
+                    load_content.visibility = View.GONE
+                    empty_content.visibility = View.VISIBLE
+                }
+                Toast.makeText(context, getString(uiState.errorMsgId), Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

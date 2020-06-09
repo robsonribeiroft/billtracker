@@ -12,6 +12,4 @@ interface Registro {
 
     fun getDescription(): String
 
-
-
 }

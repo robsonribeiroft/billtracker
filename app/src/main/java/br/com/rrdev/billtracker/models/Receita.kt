@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import br.com.rrdev.billtracker.utils.convertTimestampToDate
 import br.com.rrdev.billtracker.utils.formatOnPattern
 import br.com.rrdev.billtracker.utils.formatToReal
+import br.com.rrdev.billtracker.utils.serializeToMap
 import kotlinx.android.parcel.Parcelize
 
 
@@ -18,7 +19,9 @@ data class Receita(
     var valor: Long = 0,
     var descricao: String = "",
     var data: Long = 0,
-    var recebido: Boolean = false): Registro, Parcelable {
+    var recebido: Boolean = false,
+    var photoUrl: String? = null
+): Registro, Parcelable {
 
     override fun getDateFormattedToList(): String {
         val date = convertTimestampToDate(data)
@@ -32,4 +35,5 @@ data class Receita(
     override fun paymentIsResolved(): Boolean = recebido
 
     override fun getDescription() = descricao
+
 }

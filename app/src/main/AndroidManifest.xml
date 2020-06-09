@@ -20,9 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NewRegistroActivity" />
+        <activity android:name=".activities.NewRegistroActivity" android:theme="@style/NovaDespesaTheme" />
         <activity android:name=".activities.SearchActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".activities.MainActivity">
+
+        </activity>
     </application>
 
 </manifest>
